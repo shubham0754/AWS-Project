@@ -1,0 +1,26 @@
+--Commands to create a VPC with CLI
+
+aws ec2 create-vpc --cidr-block 10.0.0.0/16 ---creating a VPC
+
+aws ec2 create-tags --resources vpc-053258757205a30a3 --tags Key=Name,Value=IBM ---Changing the VPC name
+aws ec2 create-internet-gateway  ---creating IGW
+aws ec2 create-tags --resources igw-014bb3a33d851866d --tags Key=Name,Value=IBM-IGW ---changing IGW
+aws ec2 attach-internet-gateway --internet-gateway-id igw-014bb3a33d851866d --vpc-id vpc-053258757205a30a3 ---attach IGW with VPC
+
+aws ec2 create-subnet --vpc-id vpc-053258757205a30a3 --cidr-block 10.0.1.0/24 --creating Subnet 
+aws ec2 create-tags --resources subnet-0e8cfeaaa139d5cbf --tags Key=Name,Value=Public-Subnet ---changing Subnet Name
+
+aws ec2 create-route-table --vpc-id vpc-053258757205a30a3  --creating Route Table
+aws ec2 create-tags --resources rtb-007483882951e9aad --tags Key=Name,Value=IBM-Public-RT --changing route table name
+aws ec2 create-route --route-table-id rtb-007483882951e9aad --destination-cidr-block 0.0.0.0/0 --gateway-id igw-014bb3a33d851866d --creating Route
+aws ec2 associate-route-table --route-table-id rtb-007483882951e9aad --subnet-id subnet-0e8cfeaaa139d5cbf --associating Route table to subnet 
+aws ec2 modify-subnet-attribute --subnet-id subnet-0e8cfeaaa139d5cbf --map-public-ip-on-launch   --- assign public ip on subnet-
+aws ec2 create-subnet --vpc-id vpc-053258757205a30a3 --cidr-block 10.0.2.0/24 --creating Subnet-Private
+
+aws ec2 create-tags --resources subnet-04f11c2025ebc76af --tags Key=Name,Value=Private-Subnet
+
+aws ec2 create-key-pair --key-name Shubham --query "KeyMaterial" --output text > Shubham.pem --creating Key Pair
+
+chmod 400 Shubham.pem --only read access
+
+aws ec2 create-security-group --group-name SSHAccess --description "Security group for SSH access" --vpc-053258757205a30a3  --creating VPC

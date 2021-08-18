@@ -1,0 +1,27 @@
+    1  yum -y update
+    2  wget https://packages.chef.io/files/stable/chef-workstation/21.7.545/el/8/chef-workstation-21.7.545-1.el7.x86_64.rpm
+    3  ls
+    4  yum -y install chef-workstation-21.7.545-1.el7.x86_64.rpm
+    5  ls
+    6  ls
+    7  cd chef-workstation-21.7.545-1.el7.x86_64.rpm
+    8  which chef
+    9  mkdir cookbooks
+   10  ls
+   11  cd cookbooks
+   12  chef generate cookbook apache-cookbook
+   13  ls
+   14  cd apache-cookbook/
+   15  chef generate recipe apache-recipe
+   16  tree
+   17  yum -y install tree
+   18  tree
+   19  cd
+   20  pwd
+   21  cd cookbook/apache-cookbook
+   22  ls
+   23  cd cookbooks
+   24  exit
+   25  vi apache-cookbook/recipes/apache-recipe.rb
+   26  chef exec ruby -c apache-cookbook/recipes/apache-recipe.rb
+   27  chef-client -zr "recipe[apache-cookbook::apache-recipe]"

@@ -1,0 +1,4 @@
+https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-lamp-amazon-linux-2.html
+sudo usermod -a -G apache ec2-user
+
+shubham.cn82mjvnm5yf.us-east-1.rds.amazonaws.com --RDS end point

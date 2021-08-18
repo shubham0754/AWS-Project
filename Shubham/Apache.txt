@@ -1,0 +1,13 @@
+Listen 80
+Listen 9090
+
+<VirtualHost *:80>
+    DocumentRoot "/var/www/html/food"
+    # Other directives here
+</VirtualHost>
+<VirtualHost *:9090>
+    DocumentRoot "/var/www/html/ecomm"
+    # Other directives here
+</VirtualHost>
+
+

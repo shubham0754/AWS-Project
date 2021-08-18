@@ -1,0 +1,175 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: A sample template
+Resources:
+  CSTVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.0.0/16
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      InstanceTenancy: default
+      Tags:
+      - Key: Name
+        Value: CST-VPC
+     
+  CSTIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Name
+        Value: CST-IGW
+        
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: CSTVPC
+      InternetGatewayId:
+        Ref: CSTIGW
+        
+  CSTPUBSUB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: CSTVPC
+      CidrBlock: 192.168.0.0/24
+      AvailabilityZone: "us-east-1a"
+      MapPublicIpOnLaunch: 'true'
+      Tags:
+      - Key: Name
+        Value: CST-PUB-SUB
+        
+  CSTPVTSUB:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: CSTVPC
+      CidrBlock: 192.168.1.0/24
+      AvailabilityZone: "us-east-1a"
+      Tags:
+      - Key: Name
+        Value: CST-PVT-SUB
+        
+  CSTPUBRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:  
+        Ref: CSTVPC
+      Tags:
+      - Key: Name
+        Value: CST-PUB-RT
+        
+  CSTPVTRT:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:  
+        Ref: CSTVPC
+      Tags:
+      - Key: Name
+        Value: CST-PVT-RT
+  
+  CSTPVTSUBRTAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: CSTPVTSUB
+      RouteTableId:
+        Ref: CSTPVTRT
+        
+  SSHSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow ssh to client host
+      VpcId:
+         Ref: CSTVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: CST-SSH
+  HTTPSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow http to client host
+      VpcId:
+         Ref: CSTVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: CST-HTTP
+  SSHSGPVT1:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Allow ssh to private server from public
+      VpcId:
+         Ref: CSTVPC
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 192.168.0.0/24
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+      Tags:
+      - Key: Name
+        Value: CST-SSHPVT
+        
+  Pubserver1:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: "us-east-1a"
+      ImageId: "ami-0dc2d3e4c0f9ebd18"
+      InstanceType: "t2.micro"
+      KeyName: "Shub"
+      SecurityGroupIds:
+      - Ref: SSHSG
+      - Ref: HTTPSG
+      SubnetId: 
+        Ref : CSTPUBSUB
+      Tags:
+      - Key: Name
+        Value: CST-PUB-SERVER
+        
+  Pvtserver1:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: "us-east-1a"
+      ImageId: "ami-0dc2d3e4c0f9ebd18"
+      InstanceType: "t2.micro"
+      KeyName: "Shub"
+      SecurityGroupIds:
+      - Ref: SSHSGPVT1
+  
+      SubnetId: 
+        Ref : CSTPVTSUB
+      Tags:
+      - Key: Name
+        Value: CST-PVT-SERVER
+        
+  
+        

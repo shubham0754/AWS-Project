@@ -1,0 +1,51 @@
+Create Account By manage
+manage.chef.io
+org-starterKit-Download Starter Kit-unzip-chef-repo
+
+User name: shubham0754
+password: 13Bme@0754
+
+Organisation : Shubham
+Short name: shubham0754
+Download Winscp
+
+using Winscp- copy the Chef-Repo folder in Machine
+now we have to all things in .chef 
+
+config.rb ------ this is knife file and contains url and info
+shubham0754.pem ---------this is user which i have created
+
+
+knife ssl check --- it will check the connection and will perform the things
+
+knife bootstrap 172.31.72.107 --ssh-user ec2-user --sudo -i Shub.pem -N node1 ----------command to connect to workstation by chef to nodeserver
+knife node list --- gives you the node
+
+
+Now transfer the cookbook from workstation to chef-repo folder
+
+Now we have to uplodad 
+knife cookbook upload apache-cookbook ---upload a cookbook
+knife cookbook list --- tell the cookbook on server
+
+And we have to atach the recipe, which we would need to run on node
+
+ knife node run_list set node1 "recipe[apache-cookbook::apache-recipe]" --- to attach recipe to particular code
+ knife node show node1 ---shows the recipe on the node1
+ 
+Delete the Things from server
+
+ knife node list
+  117  knife node delete node1 -y
+  118  knife node delete node2 -y
+  119  knife cookbook
+  120  knife cookbook list
+  121  knife cookbook delete apache-cookbook -y
+  122  knife client list
+  123  knife client delete node1 -y
+  124  knife client delete node2 -y
+  
+knife role from file roles/devops.rb
+knife cookbook upload apache-cookbook
+
+

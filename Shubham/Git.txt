@@ -1,0 +1,63 @@
+ 1  git status
+    2  ls
+    3  cd GitLearning
+    4  git status
+    5  git logs
+    6  git log
+    7  git remote add orgin https://github.com/shubham0754/shubham.git
+    8  git push -u origin master
+    9  git push -u origin master
+   10  git list
+   11  git config list
+   12  git global list
+   13  ls
+   14  git log
+   15  git config --global user.name "Shubham"
+   16  git config --global user.email "Shubhamj886@gmail.com"
+   17  gi list
+   18  git list
+   19  pwd
+   20  ls
+   21  cat "This is my code1" > file
+   22  ls
+   23   this is my code > file
+   24  echo "This is my code" > file
+   25  cat file
+   26  git status
+   27  git add .
+   28  git status
+   29  git commit -m "Upate the code in file"
+   30  git commitid
+   31  git log
+   32  git show 5adfc36f
+   33  git remote add origin https://github.com/shubham0754/shubham.git
+   34  git push -u origin master
+   35  history
+ 1  cd GitLearning/
+    2  vi .gitignore
+    3  git add .gitignore
+    4  git status
+    5  git commit -m "Ignore .css , .Java files"
+    6  git status
+    7  touch file1.txt file2.txt file3.css file4.java
+    8  ls
+    9  git status
+   10   git add .
+   11  git status
+   12  git commit -m "Ignore the java and css files"
+   13  git log
+   14  git show d5dc17e56bffcd0c
+   15  touch shubham.java
+   16  git status
+   17  touch shubham.txt
+   18  git status
+   19  git log -1
+   20  git log -2
+   21  git add .
+   22  git status
+   23  git commit -m "add files"
+   24  git log --oneline
+   25  git push origin master
+   26  git log --grep "Ignore"
+   27  git log | grep commit
+   28  history

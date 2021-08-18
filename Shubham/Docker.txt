@@ -1,0 +1,42 @@
+ 1  service docker start
+    2  service docker status
+    3  docker info
+    4  docker images
+    5  docker ps
+    6  docker ps -a
+    7  docker run -it ubunutu /bin/bash
+    8  docker run -it ubuntu /bin/bash
+    9  docker images
+   10  docker run -it ubuntu /bin/bash
+   11  docker ps
+   12  docker ps -a
+   13  history
+ service docker status
+    2  service docker start
+    3  service docker status
+    4  touch file1 file2
+    5  vi Dockerfile
+    6  docker build -t myimage .
+    7  docker images
+    8  docker run -it --name conatiner1 myimage /bin/bash
+    9  docker run -it -name container2 --privileged=true --volumes-from container1 ubuntu /bin/bash
+   10  docker run -it --name container2 --privileged=true --volumes-from container1 ubuntu /bin/bash
+   11  docker run -it --name conatiner2 --privileged=true --volumes-from conatiner1 ubuntu /bin/bash
+   12  docker start container1
+   13  docker start conatiner1
+   14  docker attach conatiner1
+   15  docker run -it --name container3 -v /volume2 ubuntu /bin/bash
+   16  docker run -it --name container4 priviliged=true --volumes-from container3 ubuntu /bin/bash
+   17  docker run -it --name container4 privileged=true --volumes-from container3 ubuntu /bin/bash
+   18  docker run -it --name container4 --privileged=true --volumes-from container3 ubuntu /bin/bash
+   19  docker start container3
+   20  docker attach container3
+   21  pwd
+   22  cd ..
+   23  ls
+   24  cd ec2-user/
+   25  ls
+   26  docker run -it --name hostcont -v /home/ec2-user:/jain --privileged=true ubuntu /bin/bash (imp to hostname)
+   27  docker start hostcont
+   28  docker attach hostcont
+   29  ls
